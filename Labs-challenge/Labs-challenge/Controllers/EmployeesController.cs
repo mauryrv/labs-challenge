@@ -39,12 +39,7 @@ namespace Labs_challenge.Controllers
             }
         }
 
-
-        /// <summary>
-        /// Get just the info of one employee.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+ 
         // GET: api/Employees/5
         [ResponseType(typeof(Employee))]
         public IHttpActionResult GetEmployee(int id)
@@ -61,20 +56,21 @@ namespace Labs_challenge.Controllers
         /// <summary>
         /// Get employees with pagination.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="page"></param>
         /// <returns></returns>
         // GET: api/Employees/?page_size=10&page=1
-       // [Route([page_size=int,page=int])]
         [ResponseType(typeof(Employee))]
-        public IHttpActionResult GetEmployeesWithPagination(int id)
+        public IHttpActionResult GetEmployeesWithPagination([FromUri] int pageSize, [FromUri] int page)
         {
-            Employee employee = db.Employees.Find(id);
-            if (employee == null)
+            var pagingEmployees = db.Employees.Skip(page * pageSize).Take(pageSize).ToList();
+
+            if (pagingEmployees.Count == 0)
             {
                 return NotFound();
             }
 
-            return Ok(employee);
+            return Ok(pagingEmployees);
         }
 
         /// <summary>
