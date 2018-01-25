@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="Labs_challengeContext-Web.config Connection String" description="Labs_challengeContext A Cadeia de Conexão usada em web.config pelo aplicativo para acessar o banco de dados." defaultValue="Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=Labs_challengeContext-20180123210257; Integrated Security=True; MultipleActiveResultSets=True; AttachDbFilename=|DataDirectory|Labs_challengeContext-20180123210257.mdf" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\Desafios-processos_seletivos\\labs-challenge\\Labs-challenge\\Labs-challenge\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='Labs_challengeContext']/@connectionString" />
+  </parameter>
+  <parameter name="Labs_challengeContext_DatabasePublish-Web.config Connection String" description="Labs_challengeContext_DatabasePublish A Cadeia de Conexão usada em web.config pelo aplicativo para acessar o banco de dados." defaultValue="Labs_challengeContext_DatabasePublish.ConnetionString" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\Desafios-processos_seletivos\\labs-challenge\\Labs-challenge\\Labs-challenge\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='Labs_challengeContext_DatabasePublish']/@connectionString" />
+  </parameter>
+</parameters>

@@ -9,38 +9,23 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Labs_challenge.Models;
+using System.Threading.Tasks;
 
 namespace Labs_challenge.Controllers
 {
     [RoutePrefix("api/Employees")]
     public class EmployeesController : ApiController
     {
+      
         private Labs_challengeContext db = new Labs_challengeContext();
 
-        /// <summary>
-        /// Get all employees.
-        /// </summary>
-        /// <returns></returns>
-        // GET: api/Employees
-        [ResponseType(typeof(List<Employee>))]
-        public IHttpActionResult GetEmployees()
-        {
-            List<Employee> employees = new List<Employee>();
-            employees = db.Employees.ToList();
 
-            if (employees.Count > 0)
-            {
-                return Ok(employees);
-            }
-            else
-            {
-                return NotFound();
-
-            }
-        }
-
- 
         // GET: api/Employees/5
+        /// <summary>
+        /// Get info of just one employee.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [ResponseType(typeof(Employee))]
         public IHttpActionResult GetEmployee(int id)
         {
@@ -60,10 +45,24 @@ namespace Labs_challenge.Controllers
         /// <param name="page"></param>
         /// <returns></returns>
         // GET: api/Employees/?page_size=10&page=1
-        [ResponseType(typeof(Employee))]
-        public IHttpActionResult GetEmployeesWithPagination([FromUri] int pageSize, [FromUri] int page)
+        [ResponseType(typeof(List<Employee>))]
+        [HttpGet]
+        public IHttpActionResult GetEmployeesWithPagination([FromUri] int page_Size = 1, [FromUri] int page = 0)
         {
-            var pagingEmployees = db.Employees.Skip(page * pageSize).Take(pageSize).ToList();
+
+            if (page == 0)
+            {
+                return Ok(db.Employees.ToList());
+            }
+            
+            var skipAmount = page_Size * (page - 1);
+
+            var pagingEmployees = db.Employees.
+                AsQueryable()
+                .OrderBy(c => c.Id)
+                .Skip(skipAmount)
+                .Take(page_Size)
+                .ToList();
 
             if (pagingEmployees.Count == 0)
             {
